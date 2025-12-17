@@ -1,104 +1,141 @@
-Title: Max Profit Scheduling Problem
+# 🏗️ Max Profit Scheduling Problem
 
-Problem Overview  
-Mr. X owns a large strip of land and can build three types of buildings: Theatres, Pubs, and Commercial Parks. Each type has a fixed build time and then earns money for every unit of time it is operational after construction completes.
+---
 
-- Theatre: build time = 5, earns 1500 per time unit when operational  
-- Pub: build time = 4, earns 1000 per time unit when operational  
-- Commercial Park: build time = 10, earns 2000 per time unit when operational  
+## **Problem Overview**
 
-Only one building can be constructed at a time (no parallel construction).  
-For a given total time n, the goal is to choose how many of each building to construct, and in which order, to maximize the total earnings at time n.  
+*Mr. X owns a large strip of land* and can build **three types of buildings**. Each building takes a fixed amount of time to construct and then **earns money per unit time** once construction is complete.
 
-The output is:
-- Total earnings  
-- Number of Theatres (T)  
-- Number of Pubs (P)  
-- Number of Commercial Parks (C)
+### **Building Types & Earnings**
 
-Example:  
-For n = 7, both of these schedules give earnings 3000:  
-- Build one Theatre: build 0–5, operational 5–7 → 2 units × 1500 = 3000  
-- Build one Pub: build 0–4, operational 4–7 → 3 units × 1000 = 3000  
+* **Theatre (T)**
+  *Build Time:* `5` units
+  *Earnings:* **1500 per time unit** (after completion)
 
-Short Description of the Approach  
-The solution is based on dynamic programming over time.
+* **Pub (P)**
+  *Build Time:* `4` units
+  *Earnings:* **1000 per time unit** (after completion)
 
-Idea:
-- Consider the current time t (0 ≤ t ≤ n).  
-- From time t, you can either:
-  - Stop building, or
-  - Start constructing one of the three building types, as long as it finishes by time n.
+* **Commercial Park (C)**
+  *Build Time:* `10` units
+  *Earnings:* **2000 per time unit** (after completion)
 
-If a building type has build_time and rate:
-- It starts at time t and finishes at time finish = t + build_time.
-- It earns money from finish to n.
-- Profit from this single building = (n - finish) × rate (if finish ≤ n).
+> **Constraint:** Only **one building** can be constructed at a time (no parallel construction).
 
-For each time t, we compute the best total profit from t to n by trying all valid choices (build Theatre, Pub, Commercial Park, or stop). We memoize the results to avoid recomputation. After computing the best profit from t = 0, we reconstruct the decisions to count how many T, P, and C were built.
+For a given total time **`n`**, the objective is to determine:
 
-Files in This Repository  
-- MaxProfit.ipynb  
-  Jupyter/Colab notebook that includes:
-  - Implementation of the function solve_max_profit(n)
-  - An interactive helper function to allow a user to type n and see the result
-  - Code to generate multiple test cases and store them in a text file
+* how many of each building to construct, and
+* the order of construction,
 
-- testcases.txt  
-  A text file with 10 sample test cases. Each entry contains:
-  - Input Time Unit (n)
-  - Earnings
-  - T, P, C counts
+so that the **total earnings at time `n` are maximized**.
 
-How to Run in Google Colab  
+---
 
-1. Open MaxProfit.ipynb in Google Colab.
+## **Expected Output**
 
-2. Run the cell that defines the core function solve_max_profit(n).  
-   This function returns:
-   - best_profit (maximum total earnings)
-   - counts (a dictionary with keys "T", "P", "C")
+The algorithm returns:
+
+* **Total Earnings**
+* **Number of Theatres (T)**
+* **Number of Pubs (P)**
+* **Number of Commercial Parks (C)**
+
+---
+
+## **Example**
+
+For **`n = 7`**, both of the following schedules produce the **same maximum earnings of 3000**:
+
+* **One Theatre**
+  Build: `0 – 5`
+  Operational: `5 – 7` → `2 × 1500 = 3000`
+
+* **One Pub**
+  Build: `0 – 4`
+  Operational: `4 – 7` → `3 × 1000 = 3000`
+
+---
+
+## **Approach Overview**
+
+The solution uses **Dynamic Programming over time**.
+
+### **Core Idea**
+
+* Let the current time be **`t`**, where `0 ≤ t ≤ n`.
+* From time `t`, you can either:
+
+  * **Stop building**, or
+  * **Start constructing** one of the three building types (only if it finishes by time `n`).
+
+### **Profit Calculation**
+
+For a building with:
+
+* `build_time`
+* `rate`
+
+If started at time `t`:
+
+* `finish = t + build_time`
+* If `finish ≤ n`, then:
+
+```
+profit = (n - finish) × rate
+```
+
+### **Dynamic Programming Logic**
+
+* For each time `t`, compute the **maximum profit achievable from `t` to `n`**.
+* Try all valid options:
+
+  * Build Theatre
+  * Build Pub
+  * Build Commercial Park
+  * Stop building
+* Store (memoize) results to avoid recomputation.
+* Start from `t = 0` to get the final maximum profit.
+* Reconstruct the chosen decisions to count **T, P, and C**.
+
+---
+
+## **Repository Structure**
+
+### **MaxProfit.ipynb**
+
+A Jupyter / Google Colab notebook containing:
+
+* Implementation of `solve_max_profit(n)`
+* An interactive helper function for user input
+* Logic to generate multiple test cases and save them to a file
+
+### **testcases.txt**
+
+A text file with **10 sample test cases**, each including:
+
+* Input time unit `n`
+* Maximum earnings
+* Counts of **T**, **P**, and **C`
+
+---
+
+## **Running the Project in Google Colab**
+
+1. Open **`MaxProfit.ipynb`** in Google Colab.
+
+2. Run the cell that defines:
+
+```
+solve_max_profit(n)
+```
+
+This function returns:
+
+* `best_profit` → maximum total earnings
+* `counts` → dictionary with keys **"T"**, **"P"**, **"C"**
 
 3. Run the cell that defines the interactive function:
 
-   ```
-   def run_interactive():
-       n = int(input("Enter total time units (n): "))
-       profit, counts = solve_max_profit(n)
-       print("\n=== Result ===")
-       print(f"Input Time Unit: {n}")
-       print(f"Earnings: ${profit}")
-       print("Solutions")
-       print(f"T: {counts['T']} P: {counts['P']} C: {counts['C']}")
-   ```
-
-4. In a new cell, call:
-
-   ```
-   run_interactive()
-   ```
-
-5. When prompted, enter any value for n (for example: 7, 8, 13, 11, 20).  
-   The notebook will print:
-   - Input Time Unit  
-   - Total Earnings  
-   - T, P, C counts
-
-Test Cases  
-
-Inside the notebook there is a cell that:
-- Defines a list of 10 different n values (including 7, 8, 13)
-- Calls solve_max_profit(n) for each value
-- Prints the results in a clear format
-- Saves all test results into a file named testcases.txt
-
-Format example inside testcases.txt:
-
-Test Case 1  
-Input: Time Unit: 7  
-Earnings: $3000  
-Solutions  
-T: 1 P: 0 C: 0  
-----------------------------------------  
-
-You can download testcases.txt from Colab (Files panel) and add it to your GitHub repository along with the notebook.
+```
+def run_interactive():
+```
