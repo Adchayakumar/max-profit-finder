@@ -1,0 +1,60 @@
+Test Case 1
+Input: Time Unit: 7
+Earnings: $3000
+Solutions
+T: 1 P: 0 C: 0
+----------------------------------------
+Test Case 2
+Input: Time Unit: 8
+Earnings: $4500
+Solutions
+T: 1 P: 0 C: 0
+----------------------------------------
+Test Case 3
+Input: Time Unit: 13
+Earnings: $16500
+Solutions
+T: 2 P: 0 C: 0
+----------------------------------------
+Test Case 4
+Input: Time Unit: 5
+Earnings: $1000
+Solutions
+T: 0 P: 1 C: 0
+----------------------------------------
+Test Case 5
+Input: Time Unit: 10
+Earnings: $8500
+Solutions
+T: 1 P: 1 C: 0
+----------------------------------------
+Test Case 6
+Input: Time Unit: 11
+Earnings: $11000
+Solutions
+T: 1 P: 1 C: 0
+----------------------------------------
+Test Case 7
+Input: Time Unit: 15
+Earnings: $23500
+Solutions
+T: 2 P: 1 C: 0
+----------------------------------------
+Test Case 8
+Input: Time Unit: 18
+Earnings: $36000
+Solutions
+T: 3 P: 0 C: 0
+----------------------------------------
+Test Case 9
+Input: Time Unit: 20
+Earnings: $46000
+Solutions
+T: 3 P: 1 C: 0
+----------------------------------------
+Test Case 10
+Input: Time Unit: 25
+Earnings: $76000
+Solutions
+T: 4 P: 1 C: 0
+----------------------------------------
